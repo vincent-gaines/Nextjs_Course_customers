@@ -124,7 +124,121 @@ export async function deleteInvoice(id: string) {
   await sql`DELETE FROM invoices WHERE id = ${id}`;
   revalidatePath('/dashboard/invoices');
 }
+//*************************************************************************** */
+const FormSchemaCustomer = z.object({
+  id: z.string(),
+  name: z.string({
+    invalid_type_error: 'Please enter a customer name.',
+  }),
+  email: z.string({
+    invalid_type_error: 'Please enter email address',
+  }),
+  image_url: z.string(),
+  date: z.string(),
+});
+// Use Zod to update the expected types
+const UpdateCustomer = FormSchemaCustomer.omit({ id: true, date: true });
+const CreateCustomer = FormSchemaCustomer.omit({ id: true, date: true });
 
+export type StateCustomer = {
+  errors?: {
+    name?: string[];
+    email?: string[];
+    image_url?: string[];
+  };
+  message?: string | null;
+};
+
+export async function createCustomer(prevState: State, formData: FormData) {
+   const validatedFields = CreateCustomer.safeParse({
+    name: formData.get('name'),
+    email: formData.get('email'),
+    image_url: formData.get('image_url'),
+  });
+ 
+  // If form validation fails, return errors early. Otherwise, continue.
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Create Customer.',
+    };
+  }
+
+  
+  // Prepare data for insertion into the database
+  const { name, email, image_url } = validatedFields.data;
+  const date = new Date().toISOString().split('T')[0];
+ 
+  // Insert data into the database
+ 
+  try {
+    await sql`
+      INSERT INTO Customers (name, email, image_url, date)
+      VALUES (${name}, ${email}, ${image_url}, ${date})
+    `;
+  } catch (error) {
+    // We'll log the error to the console for now
+    console.error(error);
+  }
+ 
+   // Revalidate the cache for the Customers page and redirect the user.
+  revalidatePath('/dashboard/Customers');
+  redirect('/dashboard/Customers');
+}
+
+/* Similarly to the createCustomer action, here you are:
+
+Extracting the data from formData.
+Validating the types with Zod.
+Converting the amount to cents.
+Passing the variables to your SQL query.
+Calling revalidatePath to clear the client cache and make a new server request.
+Calling redirect to redirect the user to the Customer's page. */
+
+export async function updateCustomer(
+  id: string,
+  prevState: State,
+  formData: FormData,
+) {
+  const validatedFields = UpdateCustomer.safeParse({
+    name: formData.get('name'),
+    email: formData.get('email'),
+    image_url: formData.get('image_url'),
+  });
+ 
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Update Customer.',
+    };
+  }
+ 
+  const { name, email, image_url} = validatedFields.data;
+ 
+  try {
+    await sql`
+        UPDATE Customers
+        SET name = ${name}, email = ${email}, image_url = ${image_url}
+        WHERE id = ${id}
+      `;
+   } catch (error) {
+    return { message: 'Database Error: Failed to Update Customer.' };
+  }
+ 
+  revalidatePath('/dashboard/Customers');
+  redirect('/dashboard/Customers');
+}
+
+export async function deleteCustomer(id: string) {
+  throw new Error('Failed to Delete Customer');
+ 
+  // Unreachable code block
+  await sql`DELETE FROM Customers WHERE id = ${id}`;
+  revalidatePath('/dashboard/Customers');
+}
+
+
+//*************************************************************** */
 export async function authenticate(
   prevState: string | undefined,
   formData: FormData,
