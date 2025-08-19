@@ -118,11 +118,13 @@ export async function updateInvoice(
 }
 
 export async function deleteInvoice(id: string) {
-  throw new Error('Failed to Delete Invoice');
- 
-  // Unreachable code block
+  try {
+      // 
   await sql`DELETE FROM invoices WHERE id = ${id}`;
   revalidatePath('/dashboard/invoices');
+     } catch (error) {
+    return { message: 'Database Error: Failed to Delete Invoice' };
+  }
 }
 //*************************************************************************** */
 const FormSchemaCustomer = z.object({
@@ -230,11 +232,12 @@ export async function updateCustomer(
 }
 
 export async function deleteCustomer(id: string) {
-  throw new Error('Failed to Delete Customer');
- 
-  // Unreachable code block
+    try {
   await sql`DELETE FROM Customers WHERE id = ${id}`;
   revalidatePath('/dashboard/Customers');
+   } catch (error) {
+    return { message: 'Database Error: Failed to Delete Customer' };
+  }
 }
 
 
