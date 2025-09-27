@@ -197,6 +197,7 @@ export async function fetchFilteredCustomers(
 		  customers.id,
 		  customers.name,
 		  customers.email,
+      customers.date,
 		  customers.image_url,
 		  COUNT(invoices.id) AS total_invoices,
 		  SUM(CASE WHEN invoices.status = 'pending' THEN invoices.amount ELSE 0 END) AS total_pending,
