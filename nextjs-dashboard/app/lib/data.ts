@@ -1,6 +1,7 @@
 import postgres from 'postgres';
 import {
   CustomerField,
+  CustomerForm,
   CustomersTableType,
   InvoiceForm,
   InvoicesTable,
@@ -228,7 +229,7 @@ export async function fetchFilteredCustomers(
 
 export async function fetchCustomerById(id: string) {
   try {
-    const data = await sql<CustomerField[]>`
+    const data = await sql<CustomerForm[]>`
       SELECT
         customers.id,
         customers.name,
