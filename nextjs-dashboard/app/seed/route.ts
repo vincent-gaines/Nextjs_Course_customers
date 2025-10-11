@@ -63,6 +63,7 @@ async function seedCustomers() {
       id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
       name VARCHAR(255) NOT NULL,
       email VARCHAR(255) NOT NULL,
+      status VARCHAR(50) NOT NULL,
       image_url VARCHAR(255) NOT NULL
     );
   `;
@@ -70,8 +71,8 @@ async function seedCustomers() {
   const insertedCustomers = await Promise.all(
     customers.map(
       (customer) => sql`
-        INSERT INTO customers (id, name, email, image_url)
-        VALUES (${customer.id}, ${customer.name}, ${customer.email}, ${customer.image_url})
+        INSERT INTO customers (id, name, email, status, image_url)
+        VALUES (${customer.id}, ${customer.name}, ${customer.email}, ${customer.status}, ${customer.image_url})
         ON CONFLICT (id) DO NOTHING;
       `,
     ),

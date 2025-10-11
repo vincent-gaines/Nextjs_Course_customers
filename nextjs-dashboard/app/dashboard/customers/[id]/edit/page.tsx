@@ -13,6 +13,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
    ]);
 
   if (!Customer) {
+    console.log("Customer not found, id:", id); 
     notFound();
   }
 
