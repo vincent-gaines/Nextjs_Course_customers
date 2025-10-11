@@ -68,16 +68,16 @@ export type CustomersTableType = {
   id: string;
   name: string;
   email: string;
+  status: string;
   image_url: string;
-  total_invoices: number;
-  total_pending: number;
-  total_paid: number;
+  date: string;
 };
 
 export type FormattedCustomersTable = {
   id: string;
   name: string;
   email: string;
+  status: string;
   image_url: string;
   date: Date;
   total_invoices: number;

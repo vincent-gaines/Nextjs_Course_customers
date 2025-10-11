@@ -184,8 +184,8 @@ export async function createCustomer(prevState: State, formData: FormData) {
   }
  
    // Revalidate the cache for the Customers page and redirect the user.
-  revalidatePath('/dashboard/Customers');
-  redirect('/dashboard/Customers');
+  revalidatePath('/dashboard/customers');
+  redirect('/dashboard/customers');
 }
 
 /* Similarly to the createCustomer action, here you are:

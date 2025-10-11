@@ -231,6 +231,14 @@ export function CusTableRowSkeleton() {
       <td className="whitespace-nowrap px-3 py-3">
         <div className="h-6 w-32 rounded bg-gray-100"></div>
       </td>
+      {/* status */}
+      <td className="whitespace-nowrap px-3 py-3">
+        <div className="h-6 w-16 rounded bg-gray-100"></div>
+      </td>
+      {/* image_url */}
+      <td className="whitespace-nowrap px-3 py-3">
+        <div className="h-6 w-16 rounded bg-gray-100"></div>
+      </td>
       {/* Date */}
       <td className="whitespace-nowrap px-3 py-3">
         <div className="h-6 w-16 rounded bg-gray-100"></div>
@@ -291,6 +299,12 @@ export function CustomersTableSkeleton() {
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
                   Email
+                </th>
+                <th scope="col" className="px-3 py-5 font-medium">
+                  Status
+                </th>
+              <th scope="col" className="px-3 py-5 font-medium">
+                  Image_URL
                 </th>
                <th scope="col" className="px-3 py-5 font-medium">
                   Date

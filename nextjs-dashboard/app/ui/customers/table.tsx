@@ -38,14 +38,10 @@ export default async function CustomersTable({
                     <p className="text-sm text-gray-500">{Customer.email}</p>
                   </div>
                   <CustomerStatus status={Customer.status} />
+                  <p>{formatDateToLocal(Customer.date)}</p>
                 </div>
                 <div className="flex w-full items-center justify-between pt-4">
-                  <div>
-                    <p className="text-xl font-medium">
-                      {Customer.email}
-                    </p>
-                    <p>{Customer.image_url}</p>
-                  </div>
+                
                   <div className="flex justify-end gap-2">
                     <UpdateCustomer id={Customer.id} />
                     <DeleteCustomer id={Customer.id} />
@@ -62,9 +58,6 @@ export default async function CustomersTable({
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
                   Email
-                </th>
-                <th scope="col" className="px-3 py-5 font-medium">
-                  Amount
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
                   Date
@@ -99,13 +92,16 @@ export default async function CustomersTable({
                     {Customer.email}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
+                    {Customer.status}
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-3">
                     {Customer.image_url}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {formatDateToLocal(Customer.date)}
+                    <CustomerStatus status={Customer.status} />
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    <CustomerStatus status={Customer.status} />
+                    {formatDateToLocal(Customer.date)}
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
