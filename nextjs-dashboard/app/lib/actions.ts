@@ -118,13 +118,19 @@ export async function updateInvoice(
 }
 
 export async function deleteInvoice(id: string) {
-  try {
-      // 
+    throw new Error('Failed to Delete Invoice');
+ 
+  // Unreachable code block
   await sql`DELETE FROM invoices WHERE id = ${id}`;
   revalidatePath('/dashboard/invoices');
-     } catch (error) {
-    return { message: 'Database Error: Failed to Delete Invoice' };
-  }
+  // try {
+  //     // 
+  // await sql`DELETE FROM invoices WHERE id = ${id}`;
+  // revalidatePath('/dashboard/invoices');
+  // redirect('/dashboard/invoices');
+  //    } catch (error) {
+  //   return { message: 'Database Error: Failed to Delete Invoice' };
+  
 }
 //*************************************************************************** */
 const FormSchemaCustomer = z.object({
@@ -232,12 +238,18 @@ export async function updateCustomer(
 }
 
 export async function deleteCustomer(id: string) {
-    try {
-  await sql`DELETE FROM Customers WHERE id = ${id}`;
-  revalidatePath('/dashboard/Customers');
-   } catch (error) {
-    return { message: 'Database Error: Failed to Delete Customer' };
-  }
+    throw new Error('Failed to Delete Customer');
+ 
+  // Unreachable code block
+  await sql`DELETE FROM customers WHERE id = ${id}`;
+  revalidatePath('/dashboard/customers');
+  //   try {
+  // await sql`DELETE FROM Customers WHERE id = ${id}`;
+  // revalidatePath('/dashboard/Customers');
+  //  redirect('/dashboard/customers');
+  //  } catch (error) {
+  //   return { message: 'Database Error: Failed to Delete Customer' };
+  
 }
 
 
