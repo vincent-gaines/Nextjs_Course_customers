@@ -206,7 +206,7 @@ export async function fetchFilteredCustomers(
     `;
 
     const customers = data.map((customer) => ({
-      ...customer
+      ...customer,
     }));
 
     return customers;
@@ -224,7 +224,7 @@ export async function fetchCustomerById(id: string) {
         customers.id,
         customers.name,
         customers.email,
-        customers.status
+        customers.status,
         customers.image_url,
         customers.date
       FROM customers

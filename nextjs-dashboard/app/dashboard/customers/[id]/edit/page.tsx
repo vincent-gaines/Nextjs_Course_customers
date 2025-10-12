@@ -7,9 +7,8 @@ import { notFound } from 'next/navigation';
 export default async function Page(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
   const id = params.id;
-  const [Customer, customers] = await Promise.all([
-    fetchCustomerById(id),
-    fetchCustomers()
+  const [Customer] = await Promise.all([
+    fetchCustomerById(id)
    ]);
 
   if (!Customer) {
@@ -29,7 +28,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
           },
         ]}
       />
-      <Form Customer={Customer} customers={customers} />
+      <Form Customer={Customer}/>
     </main>
   );
 }

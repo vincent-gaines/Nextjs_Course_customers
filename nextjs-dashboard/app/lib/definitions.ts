@@ -79,10 +79,8 @@ export type FormattedCustomersTable = {
   email: string;
   status: string;
   image_url: string;
-  date: Date;
-  total_invoices: number;
-  total_pending: string;
-  total_paid: string;
+  date: string;
+
 };
 
 export type CustomerField = {
@@ -96,6 +94,7 @@ export type CustomersTable = {
   name: string;
   email: string;
   status: 'active' | 'inactive';
+  image_url: string;
   date: string;
 };
 

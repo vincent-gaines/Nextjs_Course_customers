@@ -131,7 +131,7 @@ export async function deleteInvoice(id: string) {
   //    } catch (error) {
   //   return { message: 'Database Error: Failed to Delete Invoice' };
   
-}
+};
 //*************************************************************************** */
 const FormSchemaCustomer = z.object({
   id: z.string(),
@@ -141,18 +141,21 @@ const FormSchemaCustomer = z.object({
   email: z.string({
     invalid_type_error: 'Please enter email address',
   }),
+  status: z.string(),
   image_url: z.string(),
-  date: z.string(),
+  date: z.string()
 });
 // Use Zod to update the expected types
-const UpdateCustomer = FormSchemaCustomer.omit({ id: true, date: true });
-const CreateCustomer = FormSchemaCustomer.omit({ id: true, date: true });
+const UpdateCustomer = FormSchemaCustomer.omit({ id: true});
+const CreateCustomer = FormSchemaCustomer.omit({ id: true});
 
 export type StateCustomer = {
   errors?: {
     name?: string[];
     email?: string[];
+    status?: string[];
     image_url?: string[];
+    date?: string[];
   };
   message?: string | null;
 };
@@ -161,7 +164,9 @@ export async function createCustomer(prevState: State, formData: FormData) {
    const validatedFields = CreateCustomer.safeParse({
     name: formData.get('name'),
     email: formData.get('email'),
+    status: formData.get('status'),
     image_url: formData.get('image_url'),
+    date: formData.get('date')
   });
  
   // If form validation fails, return errors early. Otherwise, continue.
@@ -174,15 +179,15 @@ export async function createCustomer(prevState: State, formData: FormData) {
 
   
   // Prepare data for insertion into the database
-  const { name, email, image_url } = validatedFields.data;
-  const date = new Date().toISOString().split('T')[0];
+  const { name, email, status, image_url, date } = validatedFields.data;
+  const currentDate = new Date().toISOString().split('T')[0];
  
   // Insert data into the database
  
   try {
     await sql`
-      INSERT INTO Customers (name, email, image_url, date)
-      VALUES (${name}, ${email}, ${image_url}, ${date})
+      INSERT INTO Customers (name, email, status, image_url, date)
+      VALUES (${name}, ${email}, ${status},  ${image_url}, ${date})
     `;
   } catch (error) {
     // We'll log the error to the console for now
@@ -211,7 +216,9 @@ export async function updateCustomer(
   const validatedFields = UpdateCustomer.safeParse({
     name: formData.get('name'),
     email: formData.get('email'),
+    status: formData.get('status'),
     image_url: formData.get('image_url'),
+    date: formData.get('date')
   });
  
   if (!validatedFields.success) {
@@ -220,13 +227,13 @@ export async function updateCustomer(
       message: 'Missing Fields. Failed to Update Customer.',
     };
   }
- 
-  const { name, email, image_url} = validatedFields.data;
- 
+
+  const { name, email, status, image_url, date } = validatedFields.data;
+
   try {
     await sql`
         UPDATE Customers
-        SET name = ${name}, email = ${email}, image_url = ${image_url}
+        SET name = ${name}, email = ${email}, status = ${status}, image_url = ${image_url}, date = ${date}
         WHERE id = ${id}
       `;
    } catch (error) {

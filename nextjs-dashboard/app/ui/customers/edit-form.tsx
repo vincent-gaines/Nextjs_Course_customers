@@ -14,10 +14,10 @@ import { useActionState } from 'react';
  
 export default function EditCustomerForm({
   Customer,
-  customers,
+  // customers,
 }: {
   Customer: CustomerForm;
-  customers: CustomerField[];
+ // customers: CustomerField[];
 }) {
   const initialState: State = { message: null, errors: {} };
   const updateCustomerWithId = updateCustomer.bind(null, Customer.id);
